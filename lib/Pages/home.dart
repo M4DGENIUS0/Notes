@@ -108,11 +108,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: deprecated_member_use
-    return WillPopScope(
-      onWillPop: () async {
-        SystemNavigator.pop();
-        return true;
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) async {
+        if (FirebaseAuth.instance.currentUser != null) {
+          return null;
+        }
       },
       child: Scaffold(
         body: ListView.builder(
